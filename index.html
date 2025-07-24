@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MOHAMMED ZAID - MERN Stack Developer</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Styles -->
+    <style>
+      /* Define color variables for theming */
+      :root {
+        --bg-primary: #111827;
+        --bg-secondary: #1f2937;
+        --bg-tertiary: #374151;
+        --text-primary: #e5e7eb;
+        --text-secondary: #9ca3af;
+        --accent-primary: #34d399;
+        --accent-secondary: #60a5fa;
+        --border-color: #374151;
+        --hero-gradient-from: #34d399;
+        --hero-gradient-to: #60a5fa;
+      }
+
+      html.light {
+        --bg-primary: #f9fafb;
+        --bg-secondary: #ffffff;
+        --bg-tertiary: #e5e7eb;
+        --text-primary: #1f2937;
+        --text-secondary: #6b7280;
+        --accent-primary: #10b981;
+        --accent-secondary: #3b82f6;
+        --border-color: #d1d5db;
+        --hero-gradient-from: #10b981;
+        --hero-gradient-to: #3b82f6;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .navbar-glass {
+        background-color: color-mix(
+          in srgb,
+          var(--bg-primary) 80%,
+          transparent
+        );
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .hero-gradient-text {
+        background: linear-gradient(
+          to right,
+          var(--hero-gradient-from),
+          var(--hero-gradient-to)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .section {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 8rem 1.5rem 4rem;
+        background-color: var(--bg-primary);
+      }
+
+      .section-alt {
+        background-color: var(--bg-secondary);
+      }
+
+      .card-bg {
+        background-color: var(--bg-secondary);
+      }
+
+      .card-bg-alt {
+        background-color: var(--bg-tertiary);
+      }
+
+      .project-card,
+      .tech-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+      }
+      .project-card:hover,
+      .tech-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 25px -5px color-mix(in srgb, var(--bg-primary) 90%, transparent),
+          0 10px 10px -5px color-mix(in srgb, var(--bg-primary) 96%, transparent);
+      }
+      .tech-card {
+        cursor: pointer;
+      }
+
+      /* Modal Styles */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+      .modal-overlay.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+      .modal-content {
+        background: var(--bg-secondary);
+        padding: 2rem;
+        border-radius: 0.5rem;
+        max-width: 500px;
+        width: 90%;
+        position: relative;
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+        border: 1px solid var(--border-color);
+      }
+      .modal-overlay.visible .modal-content {
+        transform: scale(1);
+      }
+
+      /* Form Styles */
+      .form-input {
+        background-color: var(--bg-primary);
+        border: 1px solid var(--border-color);
+      }
+      .form-input:focus {
+        --tw-ring-color: var(--accent-primary);
+        box-shadow: 0 0 0 2px var(--tw-ring-color);
+        border-color: var(--accent-primary);
+        outline: none;
+      }
+
+      /* General Text & Links */
+      .text-primary {
+        color: var(--text-primary);
+      }
+      .text-secondary {
+        color: var(--text-secondary);
+      }
+      .text-accent {
+        color: var(--accent-primary);
+      }
+      .text-accent-hover:hover {
+        color: color-mix(
+          in srgb,
+          var(--accent-primary) 80%,
+          var(--text-primary)
+        );
+      }
+      .text-link {
+        color: var(--accent-secondary);
+      }
+      .text-link-hover:hover {
+        color: color-mix(
+          in srgb,
+          var(--accent-secondary) 80%,
+          var(--text-primary)
+        );
+      }
+      .button-primary {
+        background-color: var(--accent-primary);
+      }
+      .button-primary:hover {
+        background-color: color-mix(in srgb, var(--accent-primary) 90%, #000);
+      }
+      .button-secondary {
+        background-color: var(--bg-tertiary);
+      }
+      .button-secondary:hover {
+        background-color: color-mix(in srgb, var(--bg-tertiary) 90%, #000);
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <!-- Header & Navbar -->
+    <header id="header" class="navbar-glass fixed top-0 left-0 right-0 z-50">
+      <div
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <a href="#home" class="text-2xl font-bold text-primary"
+          >MOHAMMED ZAID</a
+        >
+        <div class="flex items-center space-x-4">
+          <nav class="hidden md:flex space-x-8">
+            <a
+              href="#home"
+              class="text-secondary text-accent-hover transition duration-300"
+              >HOME</a
+            >
+            <a
+              href="#technologies"
+              class="text-secondary text-accent-hover transition duration-300"
+              >TECHNOLOGIES</a
+            >
+            <a
+              href="#projects"
+              class="text-secondary text-accent-hover transition duration-300"
+              >PROJECTS</a
+            >
+            <a
+              href="#"
+              class="text-secondary text-accent-hover transition duration-300"
+              >PAYMENT</a
+            >
+            <a
+              href="#contact"
+              class="text-secondary text-accent-hover transition duration-300"
+              >CONTACT US</a
+            >
+          </nav>
+          <button
+            id="theme-toggle"
+            class="text-primary text-xl focus:outline-none"
+          >
+            <i class="fas fa-sun"></i>
+          </button>
+          <button
+            id="mobile-menu-button"
+            class="md:hidden text-primary focus:outline-none"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+        <a href="#home" class="block py-2 text-secondary text-accent-hover"
+          >HOME</a
+        >
+        <a
+          href="#technologies"
+          class="block py-2 text-secondary text-accent-hover"
+          >TECHNOLOGIES</a
+        >
+        <a href="#projects" class="block py-2 text-secondary text-accent-hover"
+          >PROJECTS</a
+        >
+        <a href="#" class="block py-2 text-secondary text-accent-hover"
+          >PAYMENT</a
+        >
+        <a href="#contact" class="block py-2 text-secondary text-accent-hover"
+          >CONTACT US</a
+        >
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <!-- Home Section -->
+      <section id="home" class="section text-center">
+        <div class="max-w-4xl mx-auto">
+          <h1
+            class="text-4xl md:text-6xl font-bold text-primary leading-tight mb-4"
+          >
+            Hi, I'm a
+            <span class="hero-gradient-text">MERN Stack Developer</span>
+          </h1>
+          <p class="text-lg md:text-xl text-secondary mb-4">
+            I build dynamic and responsive web applications from front-end to
+            back-end. Passionate about creating seamless user experiences and
+            robust server-side logic.
+          </p>
+          <p class="text-lg md:text-xl text-accent mb-8 font-semibold">
+            We also take on college projects!
+          </p>
+          <div class="flex justify-center space-x-4">
+            <a
+              href="#projects"
+              class="button-primary text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg"
+              >View My Work</a
+            >
+            <a
+              href="#contact"
+              class="button-secondary text-primary font-bold py-3 px-6 rounded-lg transition duration-300"
+              >Get In Touch</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- Technologies Section -->
+      <section id="technologies" class="section section-alt">
+        <div class="container mx-auto px-6">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-primary mb-12 text-center"
+          >
+            Technologies I Work With
+          </h2>
+          <div
+            class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center"
+          >
+            <div class="text-left">
+              <p class="text-lg text-secondary mb-6">
+                I specialize in the MERN stack, a powerful combination of
+                technologies for building full-featured web applications. This
+                stack allows for a seamless development process, using
+                JavaScript across the board.
+              </p>
+              <p class="text-lg text-secondary">
+                From crafting interactive user interfaces with
+                <b class="text-primary">React</b>, to building scalable
+                server-side applications with
+                <b class="text-primary">Node.js</b> and
+                <b class="text-primary">Express</b>, and managing data with the
+                flexible NoSQL database <b class="text-primary">MongoDB</b>, I
+                can bring your ideas to life as end-to-end solutions.
+              </p>
+            </div>
+            <div>
+              <img
+                src="https://placehold.co/600x400/1F2937/34D399?text=Full+Stack+Development"
+                alt="MERN Stack Development"
+                class="rounded-lg shadow-2xl w-full"
+              />
+            </div>
+          </div>
+          <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div
+              class="tech-card p-6 rounded-lg"
+              data-modal-target="modal-mongodb"
+            >
+              <i class="fas fa-database text-4xl text-emerald-400 mb-4"></i>
+              <h3 class="text-xl font-bold text-primary">MongoDB</h3>
+            </div>
+            <div
+              class="tech-card p-6 rounded-lg"
+              data-modal-target="modal-express"
+            >
+              <i class="fas fa-server text-4xl text-gray-400 mb-4"></i>
+              <h3 class="text-xl font-bold text-primary">Express.js</h3>
+            </div>
+            <div
+              class="tech-card p-6 rounded-lg"
+              data-modal-target="modal-react"
+            >
+              <i class="fab fa-react text-4xl text-blue-400 mb-4"></i>
+              <h3 class="text-xl font-bold text-primary">React</h3>
+            </div>
+            <div
+              class="tech-card p-6 rounded-lg"
+              data-modal-target="modal-node"
+            >
+              <i class="fab fa-node-js text-4xl text-green-400 mb-4"></i>
+              <h3 class="text-xl font-bold text-primary">Node.js</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section id="projects" class="section">
+        <div class="container mx-auto px-6">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-primary mb-12 text-center"
+          >
+            My Projects
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="project-card rounded-lg overflow-hidden shadow-lg">
+              <img
+                src="https://placehold.co/600x400/1F2937/34D399?text=CashVirt.shop"
+                alt="CashVirt Project Thumbnail"
+                class="w-full h-48 object-cover"
+              />
+              <div class="p-6 text-center">
+                <h3 class="text-2xl font-bold text-primary mb-2">
+                  CashVirt.shop
+                </h3>
+                <p class="text-secondary mb-4">
+                  An e-commerce platform providing a seamless shopping
+                  experience.
+                </p>
+                <div class="flex justify-center space-x-4">
+                  <a
+                    href="http://www.cashvirt.shop"
+                    target="_blank"
+                    class="text-accent text-accent-hover transition duration-300 flex items-center space-x-2"
+                    ><i class="fas fa-external-link-alt"></i
+                    ><span>Live Site</span></a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="project-card rounded-lg overflow-hidden shadow-lg">
+              <img
+                src="https://placehold.co/600x400/1F2937/60A5FA?text=Analyzer"
+                alt="Student Performance Analyzer Thumbnail"
+                class="w-full h-48 object-cover"
+              />
+              <div class="p-6 text-center">
+                <h3 class="text-2xl font-bold text-primary mb-2">
+                  Student Performance Analyzer
+                </h3>
+                <p class="text-secondary mb-4">
+                  An analytical tool to track and visualize student performance
+                  data.
+                </p>
+                <div class="flex justify-center space-x-4">
+                  <a
+                    href="https://github.com/Danish1092/Student_Performance_Analyzer"
+                    target="_blank"
+                    class="text-link text-link-hover transition duration-300 flex items-center space-x-2"
+                    ><i class="fab fa-github"></i><span>View Code</span></a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="project-card rounded-lg overflow-hidden shadow-lg">
+              <img
+                src="https://placehold.co/600x400/1F2937/9CA3AF?text=Coming+Soon"
+                alt="Project Under Development"
+                class="w-full h-48 object-cover"
+              />
+              <div class="p-6 text-center">
+                <h3 class="text-2xl font-bold text-primary mb-2">
+                  Under Development
+                </h3>
+                <p class="text-secondary mb-4">
+                  Another exciting project is in the works. Stay tuned for
+                  updates!
+                </p>
+              </div>
+            </div>
+            <div class="project-card rounded-lg overflow-hidden shadow-lg">
+              <img
+                src="https://placehold.co/600x400/1F2937/9CA3AF?text=Coming+Soon"
+                alt="Project Under Development"
+                class="w-full h-48 object-cover"
+              />
+              <div class="p-6 text-center">
+                <h3 class="text-2xl font-bold text-primary mb-2">
+                  Under Development
+                </h3>
+                <p class="text-secondary mb-4">
+                  Another exciting project is in the works. Stay tuned for
+                  updates!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Get in Touch Section -->
+      <section id="contact" class="section section-alt">
+        <div class="container mx-auto px-6 text-center">
+          <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">
+            Get in Touch
+          </h2>
+          <p class="text-secondary mb-12 max-w-2xl mx-auto">
+            Have a question, a project idea, or just want to connect? Feel free
+            to reach out using the form below.
+          </p>
+          <form id="contact-form" class="max-w-xl mx-auto text-left">
+            <div class="mb-4">
+              <label for="name" class="block text-secondary mb-2">Name</label
+              ><input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="form-input w-full px-4 py-2 rounded-lg text-primary"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="email" class="block text-secondary mb-2">Email</label
+              ><input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="form-input w-full px-4 py-2 rounded-lg text-primary"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="project-type" class="block text-secondary mb-2"
+                >Project type</label
+              ><select
+                id="project-type"
+                name="project-type"
+                required
+                class="form-input w-full px-4 py-2 rounded-lg text-primary"
+              >
+                <option>Web Development</option>
+                <option>UI/UX Design</option>
+                <option>Deployment</option>
+                <option>Other Services</option>
+              </select>
+            </div>
+            <div class="mb-6">
+              <label for="query" class="block text-secondary mb-2">Query</label
+              ><textarea
+                id="query"
+                name="message"
+                rows="5"
+                required
+                class="form-input w-full px-4 py-2 rounded-lg text-primary"
+              ></textarea>
+            </div>
+            <div class="text-center">
+              <button
+                type="submit"
+                class="button-primary text-white font-bold py-3 px-8 rounded-lg transition duration-300 shadow-lg w-full md:w-auto"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="section-alt border-t border-color">
+      <div class="container mx-auto px-6 py-8 text-center text-secondary">
+        <div class="flex justify-center space-x-6 mb-4">
+          <a
+            href="https://www.linkedin.com/in/mohammed-zaid-3a72041a4/"
+            target="_blank"
+            class="text-secondary hover:text-primary transition duration-300"
+            ><i class="fab fa-linkedin fa-2x"></i
+          ></a>
+          <a
+            href="https://www.instagram.com/mzaid0022/"
+            target="_blank"
+            class="text-secondary hover:text-primary transition duration-300"
+            ><i class="fab fa-instagram fa-2x"></i
+          ></a>
+        </div>
+        <p>&copy; 2024 MOHAMMED ZAID. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Technology Modals -->
+    <div id="modal-mongodb" class="modal-overlay">
+      <div class="modal-content">
+        <h3 class="text-2xl font-bold text-emerald-400 mb-4">MongoDB</h3>
+        <p class="text-secondary">
+          MongoDB is a source-available cross-platform document-oriented
+          database program. Classified as a NoSQL database program, MongoDB uses
+          JSON-like documents with optional schemas.
+        </p>
+        <button
+          class="modal-close absolute top-4 right-4 text-secondary hover:text-primary text-2xl"
+        >
+          &times;
+        </button>
+      </div>
+    </div>
+    <div id="modal-express" class="modal-overlay">
+      <div class="modal-content">
+        <h3 class="text-2xl font-bold text-gray-300 mb-4">Express.js</h3>
+        <p class="text-secondary">
+          Express.js, or simply Express, is a back end web application framework
+          for Node.js. It is designed for building web applications and APIs.
+        </p>
+        <button
+          class="modal-close absolute top-4 right-4 text-secondary hover:text-primary text-2xl"
+        >
+          &times;
+        </button>
+      </div>
+    </div>
+    <div id="modal-react" class="modal-overlay">
+      <div class="modal-content">
+        <h3 class="text-2xl font-bold text-blue-400 mb-4">React</h3>
+        <p class="text-secondary">
+          React is a free and open-source front-end JavaScript library for
+          building user interfaces based on UI components. It is maintained by
+          Meta and a community of individual developers and companies.
+        </p>
+        <button
+          class="modal-close absolute top-4 right-4 text-secondary hover:text-primary text-2xl"
+        >
+          &times;
+        </button>
+      </div>
+    </div>
+    <div id="modal-node" class="modal-overlay">
+      <div class="modal-content">
+        <h3 class="text-2xl font-bold text-green-400 mb-4">Node.js</h3>
+        <p class="text-secondary">
+          Node.js is an open-source, cross-platform, back-end JavaScript runtime
+          environment that runs on the V8 engine and executes JavaScript code
+          outside a web browser.
+        </p>
+        <button
+          class="modal-close absolute top-4 right-4 text-secondary hover:text-primary text-2xl"
+        >
+          &times;
+        </button>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // --- THEME TOGGLE ---
+        const themeToggleBtn = document.getElementById("theme-toggle");
+        const themeIcon = themeToggleBtn.querySelector("i");
+        const html = document.documentElement;
+
+        // On page load, check for saved theme
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+          html.classList.add(savedTheme);
+          if (savedTheme === "light") {
+            themeIcon.classList.remove("fa-sun");
+            themeIcon.classList.add("fa-moon");
+          }
+        } else {
+          // Default to dark if no preference
+          html.classList.remove("light");
+          themeIcon.classList.remove("fa-moon");
+          themeIcon.classList.add("fa-sun");
+        }
+
+        themeToggleBtn.addEventListener("click", () => {
+          html.classList.toggle("light");
+          if (html.classList.contains("light")) {
+            themeIcon.classList.remove("fa-sun");
+            themeIcon.classList.add("fa-moon");
+            localStorage.setItem("theme", "light");
+          } else {
+            themeIcon.classList.remove("fa-moon");
+            themeIcon.classList.add("fa-sun");
+            localStorage.setItem("theme", "dark");
+          }
+        });
+
+        // --- MOBILE MENU ---
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        mobileMenuButton.addEventListener("click", () =>
+          mobileMenu.classList.toggle("hidden")
+        );
+
+        // --- SMOOTH SCROLL ---
+        document
+          .querySelectorAll("header nav a, #mobile-menu a")
+          .forEach((link) => {
+            link.addEventListener("click", (e) => {
+              const targetId = link.getAttribute("href");
+              if (targetId && targetId.startsWith("#")) {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                  e.preventDefault();
+                  targetElement.scrollIntoView({ behavior: "smooth" });
+                }
+              }
+              if (!mobileMenu.classList.contains("hidden")) {
+                mobileMenu.classList.add("hidden");
+              }
+            });
+          });
+
+        // --- TECHNOLOGY MODALS ---
+        const techCards = document.querySelectorAll(".tech-card");
+        const modals = document.querySelectorAll(".modal-overlay");
+        techCards.forEach((card) => {
+          card.addEventListener("click", () => {
+            const modalId = card.getAttribute("data-modal-target");
+            const modal = document.getElementById(modalId);
+            if (modal) modal.classList.add("visible");
+          });
+        });
+        modals.forEach((modal) => {
+          const closeButton = modal.querySelector(".modal-close");
+          const closeModal = () => modal.classList.remove("visible");
+          if (closeButton) closeButton.addEventListener("click", closeModal);
+          modal.addEventListener("click", (e) => {
+            if (e.target === modal) closeModal();
+          });
+        });
+
+        // --- CONTACT FORM (mailto) ---
+        const contactForm = document.getElementById("contact-form");
+        if (contactForm) {
+          contactForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const projectType = document.getElementById("project-type").value;
+            const query = document.getElementById("query").value;
+            const subject = encodeURIComponent(
+              `New Portfolio Query from ${name}`
+            );
+            const body = encodeURIComponent(
+              `Name: ${name}\nEmail: ${email}\nProject Type: ${projectType}\n\nQuery:\n${query}`
+            );
+            const mailtoLink = `mailto:mohdzaid7846@gmail.com?subject=${subject}&body=${body}`;
+            window.location.href = mailtoLink;
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
