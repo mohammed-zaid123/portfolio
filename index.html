@@ -198,6 +198,14 @@
       .button-secondary:hover {
         background-color: color-mix(in srgb, var(--bg-tertiary) 90%, #000);
       }
+
+      /* NEW STYLE: Force disabled state only on hover/click */
+      .disabled-link:hover,
+      .disabled-link:active {
+        /* Use !important to override the standard .text-link-hover */
+        color: var(--text-secondary) !important;
+        cursor: not-allowed !important;
+      }
     </style>
   </head>
   <body class="antialiased">
@@ -408,7 +416,8 @@
                   CashVirt.shop
                 </h3>
                 <p class="text-secondary mb-4">
-                  An gift card buy and sell platform providing a seamless purchasing experience of gift card's.
+                  An e-commerce platform providing a seamless shopping
+                  experience.
                 </p>
                 <div class="flex justify-center space-x-4">
                   <a
@@ -445,22 +454,34 @@
                 </div>
               </div>
             </div>
+            <!-- BuddyCertificate Project Card (UPDATED: Disabled on hover) -->
             <div class="project-card rounded-lg overflow-hidden shadow-lg">
               <img
-                src="https://placehold.co/600x400/1F2937/9CA3AF?text=Coming+Soon"
-                alt="Project Under Development"
+                src="https://placehold.co/600x400/1F2937/FBBF24?text=Buddy+Certificates+Platform"
+                alt="BuddyCertificate"
                 class="w-full h-48 object-cover"
               />
               <div class="p-6 text-center">
                 <h3 class="text-2xl font-bold text-primary mb-2">
-                  Under Development
+                  BuddyCertificate
                 </h3>
                 <p class="text-secondary mb-4">
-                  Another exciting project is in the works. Stay tuned for
-                  updates!
+                  A platform for generating and managing digital certificates
+                  efficiently.
                 </p>
+                <div class="flex justify-center space-x-4">
+                  <a
+                    role="button"
+                    aria-disabled="true"
+                    class="text-link flex items-center space-x-2 disabled-link transition duration-300"
+                    title="Code repository is currently private."
+                  >
+                    <i class="fab fa-github"></i><span>View Code</span>
+                  </a>
+                </div>
               </div>
             </div>
+            <!-- End BuddyCertificate Project Card -->
             <div class="project-card rounded-lg overflow-hidden shadow-lg">
               <img
                 src="https://placehold.co/600x400/1F2937/9CA3AF?text=Coming+Soon"
@@ -567,7 +588,7 @@
             ><i class="fab fa-instagram fa-2x"></i
           ></a>
         </div>
-        <p>&copy; 2025 MOHAMMED ZAID. All Rights Reserved.</p>
+        <p>&copy; 2024 MOHAMMED ZAID. All Rights Reserved.</p>
       </div>
     </footer>
 
