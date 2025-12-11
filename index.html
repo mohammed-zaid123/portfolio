@@ -588,7 +588,10 @@
             ><i class="fab fa-instagram fa-2x"></i
           ></a>
         </div>
-        <p>&copy; 2024 MOHAMMED ZAID. All Rights Reserved.</p>
+        <p>
+          &copy; <span id="current-year"></span> MOHAMMED ZAID. All Rights
+          Reserved.
+        </p>
       </div>
     </footer>
 
@@ -656,6 +659,12 @@
     <!-- JavaScript -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        // --- AUTO UPDATE YEAR ---
+        const yearSpan = document.getElementById("current-year");
+        if (yearSpan) {
+          yearSpan.textContent = new Date().getFullYear();
+        }
+
         // --- THEME TOGGLE ---
         const themeToggleBtn = document.getElementById("theme-toggle");
         const themeIcon = themeToggleBtn.querySelector("i");
